@@ -26,6 +26,7 @@ const GlobalStyles = createGlobalStyle`
 }
 
 
+
     
 :root {
   /* Indigo */
@@ -38,10 +39,15 @@ const GlobalStyles = createGlobalStyle`
   --color-brand-800: #ff8800;
   --color-brand-900: #ff7b00;
   --brand-bg: linear-gradient(90deg, #f9572a, #ffc905);
-  /* --brand-text-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; */
-  /* Grey */
+  
+   
+ --responsive-mobile-sm: 28.125em ;
+ --responsive-mobile: 37.5em ;
+ --responsive-tablet: 56.25em;
+ --responsive-desktop: 75em;
+ --responsive-desktop-lg: 112.5em;
+ 
+
  &,&.light-mode {
    --color-grey-0: #fff;
   --color-grey-50: #f9fafb;
@@ -70,6 +76,8 @@ const GlobalStyles = createGlobalStyle`
   --color-red-700: #b91c1c;
   --color-red-800: #991b1b;
 
+  --color-theme: linear-gradient(to right, rgb(255 255 255 / 70%), rgb(255 255 255 / 70%));
+
 
   --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
@@ -81,7 +89,11 @@ const GlobalStyles = createGlobalStyle`
   --border-radius-lg: 9px;
 
 
- }
+  --bg-img-desktop:var(--color-theme), url("/assets/images/pattern-background-desktop-light.svg");
+  --bg-img-tablet:var(--color-theme), url("/assets/images/pattern-background-tablet-light.svg");
+  --bg-img-mobile:var(--color-theme), url("/assets/images/pattern-background-mobile-light.svg");
+  
+}
 
   &.dark-mode {
     --color-grey-0: #18212f;
@@ -110,12 +122,16 @@ const GlobalStyles = createGlobalStyle`
 --color-red-100: #fee2e2;
 --color-red-700: #b91c1c;
 --color-red-800: #991b1b;
-
+  
+--color-theme: linear-gradient(to right, rgb(24 33 47 / 99%), rgb(24 33 47 /99%));
 
 --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
 --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.3);
 --shadow-lg: 0 2.4rem 3.2rem rgba(0, 0, 0, 0.4);
 
+--bg-img-desktop:var(--color-theme), url("/assets/images/pattern-background-desktop-dark.svg");
+  --bg-img-tablet:var(--color-theme), url("/assets/images/pattern-background-tablet-dark.svg");
+  --bg-img-mobile:var(--color-theme), url("/assets/images/pattern-background-mobile-dark.svg");
   }
 }
 
@@ -137,14 +153,31 @@ html {
 body {
   font-family: "Rubic";
   color: var(--color-grey-700);
-  background-color: var(--color-grey-0);
-
+   background-image:  var(--bg-img-desktop);
+  object-fit: cover;
+  background-repeat: no-repeat , no-repeat ;
+  
 
   transition: color 0.3s, background-color 0.3s;
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
+  
+
 }
+
+@media screen and (min-width:37.5em){
+ body {
+  background-image: var(--bg-img-tablet) ;
+ } 
+}
+
+@media screen and (min-width: 56.25em){
+ body {
+    background-image: var(--bg-img-desktop);
+ }
+} 
+
 
 input,
 button,
