@@ -41,3 +41,4 @@ dist-ssr
 .prettierignore
 /README-template.md
 /README-test.md
+/.history
