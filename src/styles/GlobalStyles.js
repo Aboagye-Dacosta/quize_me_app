@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyles = createGlobalStyle`
 
 @font-face {
   font-family:"Rubic" ;
@@ -208,4 +208,4 @@ img {
 
 `;
 
-export default GlobalStyle;
+export default GlobalStyles;
