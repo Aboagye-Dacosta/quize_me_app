@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledSubjectCard = styled.div`
@@ -10,6 +11,8 @@ const StyledSubjectCard = styled.div`
   border-radius: var(--border-radius-sm);
   background: var(--bg-brand);
   color: #fff;
+  cursor: pointer;
+  user-select: none;
 
   & p {
     font-size: 2rem;
@@ -19,14 +22,14 @@ const StyledSubjectCard = styled.div`
 `;
 
 const StyledLogo = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 
-    background-color: #fff;
-    border-radius: var(--border-radius-sm);
-`
+  background-color: #fff;
+  border-radius: var(--border-radius-sm);
+`;
 
 function SubjectCard({
   iconUrl,
@@ -35,8 +38,14 @@ function SubjectCard({
   iconUrl: string;
   subject: string;
 }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/${subject.toLowerCase()}`);
+  };
+
   return (
-    <StyledSubjectCard>
+    <StyledSubjectCard role="button" onClick={handleClick}>
       <StyledLogo>
         <img src={iconUrl} alt={subject} />
       </StyledLogo>

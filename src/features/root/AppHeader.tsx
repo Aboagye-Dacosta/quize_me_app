@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Heading from "../../ui/Heading";
 import AppHeaderBg from "./AppHeaderBg";
 import AppThemeToggle from "./AppThemeToggle";
+import { Link } from "react-router-dom";
 
 const StyledAppHeader = styled.div`
   position: relative;
@@ -17,7 +18,7 @@ const StyledAppHeader = styled.div`
   }
 `;
 
-const StyledLogo = styled.div`
+const StyledLogo = styled(Link)`
   display: flex;
   align-items: center;
   justify-items: center;
@@ -43,7 +44,7 @@ function AppHeader() {
     <StyledAppHeader>
       <AppHeaderBg />
 
-      <StyledLogo>
+      <StyledLogo to="/">
         <img src="/assets/images/favicon.png" alt="logo" />
         <StyledHeading as="h1"> QUIZ-me</StyledHeading>
       </StyledLogo>
