@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const StyledSubjectCard = styled.div`
+const StyledSubjectCard = styled.button`
   display: flex;
   align-items: center;
   gap: 2rem;
   padding: 1rem 2rem;
+  width: 100%;
 
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-sm);
@@ -13,11 +14,16 @@ const StyledSubjectCard = styled.div`
   color: #fff;
   cursor: pointer;
   user-select: none;
+  transition: transform 200ms ease-in-out;
 
   & p {
     font-size: 2rem;
     font-weight: bold;
     letter-spacing: 1.2px;
+  }
+
+  &:hover {
+    transform: translateX(-10px);
   }
 `;
 
@@ -45,7 +51,7 @@ function SubjectCard({
   };
 
   return (
-    <StyledSubjectCard role="button" onClick={handleClick}>
+    <StyledSubjectCard onClick={handleClick}>
       <StyledLogo>
         <img src={iconUrl} alt={subject} />
       </StyledLogo>

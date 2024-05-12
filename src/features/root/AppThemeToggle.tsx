@@ -31,6 +31,10 @@ const StyledSwitch = styled.div`
 
     z-index: 100;
   }
+
+  & input:focus ~ .toggle::before {
+    opacity: 1;
+  }
 `;
 
 const StyledCircleCommon = styled(motion.div)`
@@ -41,6 +45,23 @@ const StyledCircleCommon = styled(motion.div)`
 
   position: absolute;
   top: 1px;
+
+  &::before {
+    content: "";
+    position:absolute;
+    width: 150%;
+    height: 150%;
+    border-radius: 100%;
+    z-index: 10;
+    top: -4px;
+    left: -3px;
+
+    opacity: 0;
+
+/* background-color: red; */
+    border: 2px solid var(--color-brand-900);
+
+  }
 `;
 
 const StyledCircle = styled(StyledCircleCommon)`
@@ -69,8 +90,16 @@ function AppThemeToggle() {
       />
       <StyledSwitch>
         <input type="checkbox" onChange={toggleTheme} />
-        {isDarkMode && <StyledCircle layoutId="toggle-circle" layout />}
-        {!isDarkMode && <StyledSecondCircle layoutId="toggle-circle" layout />}
+        {isDarkMode && (
+          <StyledCircle layoutId="toggle-circle" layout className="toggle" />
+        )}
+        {!isDarkMode && (
+          <StyledSecondCircle
+            layoutId="toggle-circle"
+            layout
+            className="toggle"
+          />
+        )}
       </StyledSwitch>
       <img
         src={

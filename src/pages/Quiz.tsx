@@ -1,8 +1,7 @@
+import QuizDetails from "../features/quiz/QuizDetails";
 
 function Quiz() {
-  return (
-    <div>Quiz</div>
-  )
+  return <QuizDetails />;
 }
 
-export default Quiz
+export default Quiz;
