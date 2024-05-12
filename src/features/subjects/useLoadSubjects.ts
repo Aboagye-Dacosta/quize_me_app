@@ -1,26 +1,41 @@
-import { useQuery } from "@tanstack/react-query"
-import { getData } from "../../services/getData"
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { getData } from "../../services/getData";
 
-interface DataItem {
+export interface DataItem {
     [key: string]: string
 }
 
-export function useLoadSubjects() {
+interface AccInterface {
+    [key: string]: object
+}
 
-    const { data: subjects, isPending: isLoadingSubjects } = useQuery({
+type Data = {
+    title: string,
+    icon: string
+}
+
+export function useLoadSubjects() {
+    const queryClient = useQueryClient();
+
+    const { data: subjects, isPending: isLoadingSubjects } = useQuery<Data[]>({
         queryKey: ["subjects"],
         queryFn: getData,
-        select: ({ quizzes }) =>
-            quizzes.reduce((acc: string[], dataItem: DataItem) => {
-              
-                if(acc.includes(dataItem.title)) {
-                    return acc;
-                }
+        select: ({ quizzes }) => Object.values(quizzes.reduce((acc: AccInterface, dataItem: DataItem) => {
 
-                acc.push(dataItem.title);
+            if (dataItem.title in acc) {
                 return acc;
-            },[])
-        
+            }
+
+            acc[dataItem.title] = {
+                title: dataItem.title,
+                icon: dataItem.icon
+            }
+
+            return acc;
+        }, {})),
+        initialData: () => queryClient.getQueryData(['quiz']),
+        initialDataUpdatedAt: queryClient.getQueryState(["quiz"])?.dataUpdatedAt
+
     })
 
     return {

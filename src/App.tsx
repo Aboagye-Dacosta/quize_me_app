@@ -1,6 +1,6 @@
 import { ErrorInfo } from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { BrowserRouter, redirect, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import AppLayout from "./features/root/AppLayout";
 
@@ -8,6 +8,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Quiz from "./pages/Quiz";
 import QuizResults from "./pages/QuizResults";
 import Subjects from "./pages/Subjects";
+import { getData } from "./services/getData";
 import ErrorFallback from "./ui/ErrorFallback";
 
 const logError = (error: Error, info: ErrorInfo) => {
@@ -19,15 +20,14 @@ const logError = (error: Error, info: ErrorInfo) => {
 
 const client = new QueryClient();
 
+client.prefetchQuery({
+  queryKey: ["quiz"],
+  queryFn: getData,
+});
+
 function App() {
   return (
-    <ErrorBoundary
-      FallbackComponent={ErrorFallback}
-      onError={logError}
-      onReset={() => {
-        redirect("/");
-      }}
-    >
+    <ErrorBoundary FallbackComponent={ErrorFallback} onError={logError}>
       <QueryClientProvider client={client}>
         <BrowserRouter>
           <Routes>
@@ -36,6 +36,16 @@ function App() {
               <Route path="/:subject" element={<Quiz />} />
               <Route path="/:subject/results" element={<QuizResults />} />
             </Route>
+            <Route
+              path="/*"
+              element={
+                <ErrorFallback
+                  error={
+                    new Error("the page you are looking for is not available")
+                  }
+                />
+              }
+            />
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>

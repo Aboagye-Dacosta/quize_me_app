@@ -7,6 +7,7 @@ const StyledSubjectCard = styled.button`
   gap: 2rem;
   padding: 1rem 2rem;
   width: 100%;
+  border: none;
 
   box-shadow: var(--shadow-md);
   border-radius: var(--border-radius-sm);
