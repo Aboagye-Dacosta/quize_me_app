@@ -3,6 +3,7 @@ import styled from "styled-components";
 import AppBody from "./AppBody";
 import AppHeader from "./AppHeader";
 import ThemeContextProvider from "../../context/ThemeContext";
+import ErrorContextProvider from "../../context/ErrorContext";
 
 const StyledAppLayout = styled.div`
   position: relative;
@@ -12,12 +13,14 @@ const StyledAppLayout = styled.div`
 
 function AppLayout() {
   return (
-    <ThemeContextProvider>
-      <StyledAppLayout>
-        <AppHeader />
-        <AppBody />
-      </StyledAppLayout>
-    </ThemeContextProvider>
+    <ErrorContextProvider>
+      <ThemeContextProvider>
+        <StyledAppLayout>
+          <AppHeader />
+          <AppBody />
+        </StyledAppLayout>
+      </ThemeContextProvider>
+    </ErrorContextProvider>
   );
 }
 

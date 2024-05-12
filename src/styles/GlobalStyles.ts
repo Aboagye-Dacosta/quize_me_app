@@ -48,6 +48,11 @@ const GlobalStyles = createGlobalStyle`
  --responsive-desktop-lg: 112.5em;
  
 
+  --border-radius-tiny: 3px;
+  --border-radius-sm: 5px;
+  --border-radius-md: 7px;
+  --border-radius-lg: 9px;
+
  &,&.light-mode {
    --color-grey-0: #fff;
   --color-grey-50: #f9fafb;
@@ -82,12 +87,6 @@ const GlobalStyles = createGlobalStyle`
   --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-md: 0px 0.6rem 2.4rem rgba(0, 0, 0, 0.06);
   --shadow-lg: 0px 2.4rem 3.2rem rgba(0, 0, 0, 0.12);
-
-  --border-radius-tiny: 3px;
-  --border-radius-sm: 5px;
-  --border-radius-md: 7px;
-  --border-radius-lg: 9px;
-
 
   --bg-img-desktop:var(--color-theme), url("/assets/images/pattern-background-desktop-light.svg");
   --bg-img-tablet:var(--color-theme), url("/assets/images/pattern-background-tablet-light.svg");
@@ -207,7 +206,7 @@ button:focus,
 textarea:focus,
 select:focus {
   outline: 2px solid var(--color-brand-600);
-  outline-offset: 1px;
+  outline-offset: -1px;
 }
 
 /* Parent selector, finally 😃 */

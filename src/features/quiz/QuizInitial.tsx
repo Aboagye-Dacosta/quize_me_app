@@ -1,16 +1,18 @@
+import { motion } from "framer-motion";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
 import { useQuizQuestions } from "./useQuizQuestions";
 
+import { useQuiz } from "../../context/QuizContext";
 import Button from "../../ui/Button";
 import Heading from "../../ui/Heading";
 import Row from "../../ui/Row";
 import Spinner from "../../ui/Spinner";
 import { useLoadSubjects } from "../subjects/useLoadSubjects";
 
-const StyledStartQuiz = styled.div`
+const StyledQuizInitial = styled(motion.div)`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,13 +73,14 @@ const TimeCard = styled.div`
   gap: 1rem;
 `;
 
-function StartQuiz() {
+function QuizInitial() {
   const navigate = useNavigate();
   const { subject } = useParams();
   const { quiz: { questions, icon, title } = {}, isLoadingQuiz } =
     useQuizQuestions();
 
   const { subjects, isLoadingSubjects } = useLoadSubjects();
+  const { dispatch } = useQuiz();
 
   useEffect(() => {
     if (!isLoadingSubjects && subjects?.length > 0) {
@@ -91,14 +94,14 @@ function StartQuiz() {
 
       if (!hasSubject) throw new Error("Please check the url link");
     }
-  },[isLoadingSubjects, subject, subjects]);
+  }, [isLoadingSubjects, subject, subjects]);
 
   return (
     <>
       {isLoadingQuiz ? (
         <Spinner />
       ) : (
-        <StyledStartQuiz>
+        <StyledQuizInitial layout="position" layoutId="quiz">
           <StyledHeader>
             <StyledIcon>
               <img src={icon} alt={subject} />
@@ -129,12 +132,14 @@ function StartQuiz() {
             >
               Back{" "}
             </Button>
-            <Button>Start Quiz </Button>
+            <Button onClick={() => dispatch({ type: "/start" })}>
+              Start Quiz{" "}
+            </Button>
           </Row>
-        </StyledStartQuiz>
+        </StyledQuizInitial>
       )}
     </>
   );
 }
 
-export default StartQuiz;
+export default QuizInitial;
