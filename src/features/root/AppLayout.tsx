@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import AppBody from "./AppBody";
 import AppHeader from "./AppHeader";
+import ThemeContextProvider from "../../context/ThemeContext";
 
 const StyledAppLayout = styled.div`
   position: relative;
@@ -11,10 +12,12 @@ const StyledAppLayout = styled.div`
 
 function AppLayout() {
   return (
-    <StyledAppLayout>
-      <AppHeader />
-      <AppBody />
-    </StyledAppLayout>
+    <ThemeContextProvider>
+      <StyledAppLayout>
+        <AppHeader />
+        <AppBody />
+      </StyledAppLayout>
+    </ThemeContextProvider>
   );
 }
 

@@ -38,7 +38,7 @@ const GlobalStyles = createGlobalStyle`
   --color-brand-700: #ff9500;
   --color-brand-800: #ff8800;
   --color-brand-900: #ff7b00;
-  --brand-bg: linear-gradient(90deg, #f9572a, #ffc905);
+  --bg-brand: linear-gradient(90deg, #f9572a, #ffc905);
   
    
  --responsive-mobile-sm: 28.125em ;
@@ -155,7 +155,7 @@ body {
   color: var(--color-grey-700);
    background-image:  var(--bg-img-desktop);
   object-fit: cover;
-  background-repeat: no-repeat , no-repeat ;
+  background-repeat: no-repeat;
   
 
   transition: color 0.3s, background-color 0.3s;
