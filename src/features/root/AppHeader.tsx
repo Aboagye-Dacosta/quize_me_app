@@ -10,6 +10,7 @@ const StyledAppHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   color: var(--color-grey-100);
+  margin-bottom: 5rem;
 
   @media screen and (min-width: 56.25em) {
     padding: 2rem 10rem;
@@ -20,7 +21,7 @@ const StyledLogo = styled.div`
   display: flex;
   align-items: center;
   justify-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 `;
 
 const StyledHeading = styled(Heading)`

@@ -1,8 +1,7 @@
+import SubjectsDetail from "../features/subjects/SubjectsDetail";
 
 function Subjects() {
-  return (
-    <div>Subjects</div>
-  )
+  return <SubjectsDetail />;
 }
 
-export default Subjects
+export default Subjects;
