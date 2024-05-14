@@ -9,7 +9,10 @@ import {
 } from "../../services/dataApi";
 import Button from "../../ui/Button";
 import Heading from "../../ui/Heading";
+import Modal from "../../ui/Modal";
 import Row from "../../ui/Row";
+
+import QuizIntermediate from "./QuizIntermediate";
 
 const StyledQuizInitial = styled(motion.div)`
   display: flex;
@@ -78,7 +81,7 @@ function QuizInitial() {
   const questionLen = getSubjectQuestionsLen(subject!);
   const { title, icon } = getSingleSubject(subject!);
 
-  const { dispatch } = useQuiz();
+ 
 
   return (
     <StyledQuizInitial layout="position" layoutId="quiz">
@@ -112,9 +115,14 @@ function QuizInitial() {
         >
           Back{" "}
         </Button>
-        <Button onClick={() => dispatch({ type: "/start" })}>
-          Start Quiz{" "}
-        </Button>
+        <Modal>
+          <Modal.Open opens="intermediate">
+            <Button>Start Quiz </Button>
+          </Modal.Open>
+          <Modal.Window name="intermediate">
+            <QuizIntermediate />
+          </Modal.Window>
+        </Modal>
       </Row>
     </StyledQuizInitial>
   );
