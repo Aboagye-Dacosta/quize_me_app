@@ -12,31 +12,37 @@ const StyledErrorAlert = styled(motion.div)`
   padding: 1rem 2rem;
 
   box-shadow: var(--shadow-md);
-  width: max-content;
+  max-width: 50rem;
   margin: 2rem auto;
   background-color: var(--color-red-100);
   border-radius: var(--border-radius-md);
+
+
+    color: var(--color-red-800);
+  
 `;
 
 
-const variant = {
-    show: {
-        opacity: 1,
-        transition:  {
-            duration: "200ms"
-        }
-    },
-    hide: {
-        opacity: 0,
-    }
-}
+// const variant = {
+//     show: {
+//         opacity: 1,
+//         transition:  {
+//             duration: "200ms"
+//         }
+//     },
+//     hide: {
+//         opacity: 0,
+//     }
+// }
 
 function ErrorAlert() {
   const { errorMessage, setErrorMessage } = useError();
+
+  console.log("from alert error", errorMessage);
   return (
     <>
       {errorMessage && (
-        <StyledErrorAlert animate={errorMessage ? "show" : "hide"} variants={variant} initial="hide">
+        <StyledErrorAlert >
           <img src="/assets/images/icon-error.svg" alt="error" />
           <p>{errorMessage}</p>
           <IconButton onClick={() => setErrorMessage(null)}>&times;</IconButton>

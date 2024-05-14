@@ -10,6 +10,7 @@ function AppBody() {
   return (
     <StyledAppBody>
       <ErrorAlert/>
+      
       <Outlet />
     </StyledAppBody>
   );

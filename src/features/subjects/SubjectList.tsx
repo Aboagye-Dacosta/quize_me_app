@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-import { useLoadSubjects } from "./useLoadSubjects";
-
-import Spinner from "../../ui/Spinner";
+import { getSubjects } from "../../services/dataApi";
 import SubjectCard from "./SubjectCard";
 
 const StyledSubjectList = styled.ul`
@@ -18,21 +16,15 @@ const StyledSubjectList = styled.ul`
 `;
 
 function SubjectList() {
-  const { isLoadingSubjects, subjects} = useLoadSubjects();
-
-  console.log(subjects);
+  const subjects = getSubjects();
 
   return (
     <StyledSubjectList>
-      {isLoadingSubjects ? (
-        <Spinner />
-      ) : (
-        subjects!.map((subject, key: number) => (
-          <li key={key}>
-            <SubjectCard iconUrl={subject!.icon} subject={subject!.title} />
-          </li>
-        ))
-      )}
+      {subjects.map((subject, key: number) => (
+        <li key={key}>
+          <SubjectCard iconUrl={subject.icon} subject={subject.title} />
+        </li>
+      ))}
     </StyledSubjectList>
   );
 }

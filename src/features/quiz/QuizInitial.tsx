@@ -1,16 +1,15 @@
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import { useQuizQuestions } from "./useQuizQuestions";
-
 import { useQuiz } from "../../context/QuizContext";
+import {
+  getSingleSubject,
+  getSubjectQuestionsLen,
+} from "../../services/dataApi";
 import Button from "../../ui/Button";
 import Heading from "../../ui/Heading";
 import Row from "../../ui/Row";
-import Spinner from "../../ui/Spinner";
-import { useLoadSubjects } from "../subjects/useLoadSubjects";
 
 const StyledQuizInitial = styled(motion.div)`
   display: flex;
@@ -76,69 +75,48 @@ const TimeCard = styled.div`
 function QuizInitial() {
   const navigate = useNavigate();
   const { subject } = useParams();
-  const { quiz: { questions, icon, title } = {}, isLoadingQuiz } =
-    useQuizQuestions();
+  const questionLen = getSubjectQuestionsLen(subject!);
+  const { title, icon } = getSingleSubject(subject!);
 
-  const { subjects, isLoadingSubjects } = useLoadSubjects();
   const { dispatch } = useQuiz();
 
-  useEffect(() => {
-    if (!isLoadingSubjects && subjects?.length > 0) {
-      let hasSubject = false;
-
-      subjects!.forEach((sub) => {
-        if (sub.title.toLowerCase() === subject!.toLowerCase()) {
-          hasSubject = true;
-        }
-      });
-
-      if (!hasSubject) throw new Error("Please check the url link");
-    }
-  }, [isLoadingSubjects, subject, subjects]);
-
   return (
-    <>
-      {isLoadingQuiz ? (
-        <Spinner />
-      ) : (
-        <StyledQuizInitial layout="position" layoutId="quiz">
-          <StyledHeader>
-            <StyledIcon>
-              <img src={icon} alt={subject} />
-            </StyledIcon>
-            <StyledHeading>{title?.toUpperCase()} QUIZ</StyledHeading>
-          </StyledHeader>
-          <p>Do you you want to continue with the quiz</p>
-          <p>
-            <span>Note</span> , once the quiz begins you wont be able to change.{" "}
-            <br /> A question can only be attempted once.{" "}
-          </p>
+    <StyledQuizInitial layout="position" layoutId="quiz">
+      <StyledHeader>
+        <StyledIcon>
+          <img src={icon} alt={subject} />
+        </StyledIcon>
+        <StyledHeading>{title?.toUpperCase()} QUIZ</StyledHeading>
+      </StyledHeader>
+      <p>Do you you want to continue with the quiz</p>
+      <p>
+        <span>Note</span> , once the quiz begins you wont be able to change.{" "}
+        <br /> A question can only be attempted once.{" "}
+      </p>
 
-          <TimeCard>
-            <p>
-              Number of questions <span>{questions?.length}</span>
-            </p>
-            <p>
-              Alloted time for quiz <span>{50}min</span>{" "}
-            </p>
-          </TimeCard>
+      <TimeCard>
+        <p>
+          Number of questions <span>{questionLen}</span>
+        </p>
+        <p>
+          Alloted time for quiz <span>{50}min</span>{" "}
+        </p>
+      </TimeCard>
 
-          <Row type="horizontal">
-            <Button
-              variation="secondary"
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              Back{" "}
-            </Button>
-            <Button onClick={() => dispatch({ type: "/start" })}>
-              Start Quiz{" "}
-            </Button>
-          </Row>
-        </StyledQuizInitial>
-      )}
-    </>
+      <Row type="horizontal">
+        <Button
+          variation="secondary"
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          Back{" "}
+        </Button>
+        <Button onClick={() => dispatch({ type: "/start" })}>
+          Start Quiz{" "}
+        </Button>
+      </Row>
+    </StyledQuizInitial>
   );
 }
 
