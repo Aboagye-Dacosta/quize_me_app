@@ -1,4 +1,4 @@
-import { ErrorInfo } from "react";
+ 
 import { ErrorBoundary } from "react-error-boundary";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -9,16 +9,11 @@ import Subjects from "./pages/Subjects";
 
 import ErrorFallback from "./ui/ErrorFallback";
 
-const logError = (error: Error, info: ErrorInfo) => {
-  console.log("error");
-  console.error(error);
-  console.log("stack");
-  console.log(info);
-};
+ 
 
 function App() {
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback} onError={logError}>
+    <ErrorBoundary FallbackComponent={ErrorFallback} >
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppLayout />}>

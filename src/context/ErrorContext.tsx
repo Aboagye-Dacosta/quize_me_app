@@ -14,7 +14,7 @@ export default function ErrorContextProvider({
   children: React.ReactNode;
 }) {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  console.log(errorMessage)
+ 
   return (
     <ErrorContext.Provider value={{ errorMessage, setErrorMessage }}>
       {children}
