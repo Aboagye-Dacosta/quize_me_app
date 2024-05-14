@@ -47,7 +47,7 @@ function QuizTimer() {
       clearInterval(interval);
     };
       
-  }, [timeRemaining, setTimeRemaining]);
+  }, [timeRemaining, setTimeRemaining, dispatch]);
 
     console.log(timeRemaining);
   return <Time time={timeRemaining} />;
