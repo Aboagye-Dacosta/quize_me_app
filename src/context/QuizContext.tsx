@@ -11,7 +11,7 @@ type QuizState = {
   cumScore: number;
   answeredQuestion: number[];
   isCorrectAnswer: boolean | null;
-  pageState: "initial" | "intermediate" | "start" | "complete";
+  pageState: "initial" |   "start" | "complete";
   hasAnswered: boolean;
   hasSelected: boolean;
 };

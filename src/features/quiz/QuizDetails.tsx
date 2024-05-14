@@ -12,7 +12,6 @@ function QuizDetails() {
   return (
     <>
       {pageState === "initial" && <QuizInitial />}
-      {/* {pageState === "intermediate" && <QuizIntermediate />} */}
       {pageState === "start" && <QuizSession />}
       {pageState === "complete" && <QuizCompeted />}
     </>
