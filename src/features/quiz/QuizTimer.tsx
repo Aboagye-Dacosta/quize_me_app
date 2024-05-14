@@ -4,9 +4,7 @@ import { useParams } from "react-router-dom";
 import { getSubjectQuestionsLen } from "../../services/dataApi";
 import {useQuiz} from "../../context/QuizContext"
 
-//1 question = 2min
-//1 min = 60secs
-// 1sec = 1000ms
+ 
 
 function Time({ time }: { time: number }) {
   const hr = Math.floor(time / (60 * 60));
@@ -49,7 +47,7 @@ function QuizTimer() {
       
   }, [timeRemaining, setTimeRemaining, dispatch]);
 
-    console.log(timeRemaining);
+     
   return <Time time={timeRemaining} />;
 }
 
