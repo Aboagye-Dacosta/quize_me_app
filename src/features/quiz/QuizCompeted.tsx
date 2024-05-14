@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { useQuiz } from "../../context/QuizContext";
 import Heading from "../../ui/Heading"
@@ -71,7 +71,8 @@ font-size: 1.6rem;
 `
 
 function QuizCompeted() {
-  const {subject} = useParams();
+  const { subject } = useParams();
+  const navigate = useNavigate();
   const { quizState: {cumScore}} = useQuiz();
 
   const subjectObj = getSingleSubject(subject!);
@@ -92,7 +93,7 @@ function QuizCompeted() {
 
       <Row>
         <Button>Take another quiz</Button>
-        <Button variation ="secondary" > End Session</Button>
+        <Button variation ="secondary" onClick={()=> navigate("/")}> End Session</Button>
       </Row>
     </StyledQuizCompleted>
   );
