@@ -23,18 +23,7 @@ const StyledErrorAlert = styled(motion.div)`
 `;
 
 
-// const variant = {
-//     show: {
-//         opacity: 1,
-//         transition:  {
-//             duration: "200ms"
-//         }
-//     },
-//     hide: {
-//         opacity: 0,
-//     }
-// }
-
+  
 function ErrorAlert() {
   const { errorMessage, setErrorMessage } = useError();
 

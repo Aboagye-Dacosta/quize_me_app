@@ -22,6 +22,7 @@ function SubjectList() {
     <StyledSubjectList>
       {subjects.map((subject, key: number) => (
         <li key={key}>
+        
           <SubjectCard iconUrl={subject.icon} subject={subject.title} />
         </li>
       ))}
