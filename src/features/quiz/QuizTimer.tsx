@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+import { useQuiz } from "../../context/QuizContext";
+import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 import { getSubjectQuestionsLen } from "../../services/dataApi";
-import {useQuiz} from "../../context/QuizContext"
-
- 
 
 function Time({ time }: { time: number }) {
   const hr = Math.floor(time / (60 * 60));
-  const min = Math.floor((time - (hr * 60 * 60)) / 60);
-  const secs = time - ( (hr * 60 * 60) + (min * 60));
+  const min = Math.floor((time - hr * 60 * 60) / 60);
+  const secs = time - (hr * 60 * 60 + min * 60);
 
   return (
     <div>
@@ -21,11 +20,17 @@ function Time({ time }: { time: number }) {
 }
 
 function QuizTimer() {
-    const { subject } = useParams();
-    const { dispatch } = useQuiz();
+  const { subject } = useParams();
+  const { dispatch } = useQuiz();
   const questionsLen = getSubjectQuestionsLen(subject!);
+
+  const [localState, setLocalState] = useLocalStorageState(
+    questionsLen * 60 * 2,
+    "timer"
+  );
+
   const [timeRemaining, setTimeRemaining] = useState<number>(
-    questionsLen * 60 * 2
+    localState as number
   );
 
   useEffect(() => {
@@ -35,19 +40,19 @@ function QuizTimer() {
       interval = setInterval(() => {
         setTimeRemaining((state) => state - 1);
       }, 1000);
+
+      setLocalState(timeRemaining);
     }
 
-    if(timeRemaining === 0){
-        dispatch({type: "/complete"})
+    if (timeRemaining === 0) {
+      dispatch({ type: "/complete" });
     }
 
     return () => {
       clearInterval(interval);
     };
-      
-  }, [timeRemaining, setTimeRemaining, dispatch]);
+  }, [timeRemaining, setTimeRemaining, dispatch, setLocalState]);
 
-     
   return <Time time={timeRemaining} />;
 }
 
