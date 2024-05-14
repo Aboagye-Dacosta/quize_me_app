@@ -12,9 +12,14 @@ const StyledAppHeader = styled.div`
   justify-content: space-between;
   color: var(--color-grey-100);
   margin-bottom: 5rem;
+  padding: 2rem ;
 
   @media screen and (min-width: 56.25em) {
     padding: 2rem 10rem;
+  }
+
+  @media screen and (min-width:75em) {
+    padding: 2rem 20rem;
   }
 `;
 
@@ -26,13 +31,17 @@ const StyledLogo = styled(Link)`
 `;
 
 const StyledHeading = styled(Heading)`
-  font-size: 4rem;
+  font-size: 2rem;
   background: var(--bg-brand);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   background-size: cover;
   background-position: center;
+
+  @media screen and (min-width: 37.5em){
+    font-size: 4rem;
+  }
 `;
 
 

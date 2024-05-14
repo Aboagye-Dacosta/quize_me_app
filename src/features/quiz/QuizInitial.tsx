@@ -99,7 +99,7 @@ function QuizInitial() {
           Number of questions <span>{questionLen}</span>
         </p>
         <p>
-          Alloted time for quiz <span>{50}min</span>{" "}
+          Alloted time for quiz <span>{questionLen * 2}min</span>{" "}
         </p>
       </TimeCard>
 

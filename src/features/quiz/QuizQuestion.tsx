@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 import styled from "styled-components";
+
 import { useError } from "../../context/ErrorContext";
 import { useQuiz } from "../../context/QuizContext";
+
 import correct from "../../assets/correct.mp3"
 import wrong from "../../assets/wrong.mp3"
 

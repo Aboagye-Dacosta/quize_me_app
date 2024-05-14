@@ -20,12 +20,14 @@ const StyledQuizCompleted = styled(motion.div)`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  gap: 1rem;
 `;
 
 const StyledHeading = styled(Heading)`
   display: flex;
   background-clip: text;
   background: var(--bg-brand);
+  text-align: center;
 
   -webkit-background-clip: text;
   color: transparent;
@@ -61,7 +63,22 @@ const Content = styled.div`
 
   font-size: 1.6rem;
 
+  & p {
+    display: flex; 
+    flex-direction:column;
+    align-items: center;
+    gap: 0.7rem;
+
+    @media screen and (min-width: 37.25em){
+      flex-direction: row;
+    }
+  }
+
   & span {
+    text-align: center;
+  }
+
+  & span:last-of-type {
     display: inline-block;
     font-weight: bold;
 
@@ -89,19 +106,19 @@ function QuizCompeted() {
         <img src={subjectObj.icon} alt={`icon of ${subjectObj.title}`} />{" "}
       </Image>
       <StyledHeading>
-        <p> Congratulation You've Complelted Quiz on {subjectObj.title} </p>
+        <p> Congratulation You've Completed Quiz on {subjectObj.title} </p>
       </StyledHeading>
       <Content>
         <p>
           {" "}
-          Number of questions answered correct{" "}
+          <span>Number of questions answered correct</span>{" "}
           <span>
             {cumScore} / {questionsLen}{" "}
           </span>{" "}
         </p>
         <p>
           {" "}
-          Points award <span>{cumScore} </span>{" "}
+         <span> Points award </span><span>{cumScore} </span>{" "}
         </p>
       </Content>
 

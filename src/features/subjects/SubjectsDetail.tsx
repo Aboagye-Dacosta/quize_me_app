@@ -3,6 +3,7 @@ import Welcome from "./Welcome";
 import SubjectList from "./SubjectList";
 
 const StyledSubjectsLayout = styled.div`
+
   @media screen and (min-width: 56.25em) {
     padding: 2rem 10rem;
     display: grid;

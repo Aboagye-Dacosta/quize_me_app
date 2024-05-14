@@ -9,6 +9,7 @@ import {
 } from "../../services/dataApi";
 import Button from "../../ui/Button";
 import QuizQuestion from "./QuizQuestion";
+import QuizTimer from "./QuizTimer"
 
 const StyledQuizSession = styled(motion.div)`
   display: flex;
@@ -30,12 +31,27 @@ const StyledQuizQuestionTracker = styled.div`
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
 
-  & span {
+  & p {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items:center;
+    gap: 1rem;
+
+    @media screen and (min-width: 37.5em ){
+      flex-direction: row;
+
+    }
+  }
+
+  & span:last-of-type {
     display: inline-block;
     font-weight: bold;
     background: var(--bg-brand);
     padding: 1rem;
     border-radius: var(--border-radius-sm);
+
+    text-align: center;
   }
 `;
 
@@ -55,7 +71,7 @@ function QuizSession() {
   } = useQuiz();
 
   const questions = getSubjectQuestions(subject!);
-  const questionsLen = 2; //getSubjectQuestionsLen(subject!);
+  const questionsLen = getSubjectQuestionsLen(subject!);
 
   const handleSubmit = () => {
     if (!hasSelected) {
@@ -89,10 +105,13 @@ function QuizSession() {
     <StyledQuizSession layout="position" layoutId="quiz">
       <StyledQuizQuestionTracker>
         <p>
-          Question No: <span> {currentQuestion + 1}</span>
+          <span>Total Points</span> <span> {currentQuestion + 1}</span>
         </p>
         <p>
-          Total Points <span>{cumScore}</span>
+         <span>Total Points</span>  <span>{cumScore}</span>
+        </p>
+        <p>
+         Time Remaining <span> <QuizTimer/></span>
         </p>
       </StyledQuizQuestionTracker>
       <QuizQuestion question={questions[currentQuestion].question}>
