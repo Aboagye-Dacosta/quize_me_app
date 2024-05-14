@@ -11,7 +11,7 @@ type QuizState = {
   cumScore: number;
   answeredQuestion: number[];
   isCorrectAnswer: boolean | null;
-  pageState: "initial" | "start" | "complete";
+  pageState: "initial" | "intermediate" | "start" | "complete";
   hasAnswered: boolean;
   hasSelected: boolean;
 };
@@ -43,7 +43,6 @@ const initState: QuizState = {
 const reducer = (state: QuizState, action: Action): QuizState => {
   const payload = action?.payload;
   switch (action.type) {
-                
     case "/initial":
       return {
         ...initState,
@@ -68,13 +67,16 @@ const reducer = (state: QuizState, action: Action): QuizState => {
             ? state.cumScore + 1
             : state.cumScore,
         isCorrectAnswer: payload.answer === state.selectedAnswer,
-        hasAnswered: true
+        hasAnswered: true,
       };
     case "/start/next":
       return {
         ...initState,
         pageState: "start",
-        currentQuestion: Math.min(state!.currentQuestion + 1, payload!.questionsLen - 1),
+        currentQuestion: Math.min(
+          state!.currentQuestion + 1,
+          payload!.questionsLen - 1
+        ),
         cumScore: state.cumScore,
       };
 
