@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
+import { useLocalStorageState } from "../hooks/useLocalStorageState";
 
 interface Payload {
   [key: string]: string | number | object | boolean | null;
@@ -11,9 +12,10 @@ type QuizState = {
   cumScore: number;
   answeredQuestion: number[];
   isCorrectAnswer: boolean | null;
-  pageState: "initial" |   "start" | "complete";
+  pageState: "initial" | "start" | "complete";
   hasAnswered: boolean;
   hasSelected: boolean;
+  fromLocal: boolean;
 };
 
 type Action = {
@@ -38,6 +40,7 @@ const initState: QuizState = {
   pageState: "initial",
   hasAnswered: false,
   hasSelected: false,
+  fromLocal: false, 
 };
 
 const reducer = (state: QuizState, action: Action): QuizState => {
@@ -52,12 +55,14 @@ const reducer = (state: QuizState, action: Action): QuizState => {
         ...state,
         currentQuestion: 0,
         pageState: "start",
+        fromLocal: false,
       };
     case "/start/select":
       return {
         ...state,
         selectedAnswer: payload!.selectedAnswer,
         hasSelected: true,
+        fromLocal:false,
       };
     case "/start/submit":
       return {
@@ -68,6 +73,7 @@ const reducer = (state: QuizState, action: Action): QuizState => {
             : state.cumScore,
         isCorrectAnswer: payload.answer === state.selectedAnswer,
         hasAnswered: true,
+        fromLocal: false
       };
     case "/start/next":
       return {
@@ -84,6 +90,7 @@ const reducer = (state: QuizState, action: Action): QuizState => {
       return {
         ...state,
         pageState: "complete",
+        fromLocal:false,
       };
 
     default:
@@ -92,11 +99,27 @@ const reducer = (state: QuizState, action: Action): QuizState => {
 };
 
 function useQuizContext() {
-  const [quizState, dispatch] = useReducer(reducer, initState);
+  const [localState, setLocalState] = useLocalStorageState(initState, "quiz");
+
+  const [quizState, dispatchAction] = useReducer(
+    reducer,
+    initState,
+    (initState) => {
+      if (Object.keys(localState).length > 0) return { ...(localState as QuizState), fromLocal: true };
+      return initState;
+    }
+  );
+
+  const dispatch = ({ type, payload }: { type: string; payload?: Payload }) => {
+    dispatchAction({ type, payload });
+ 
+    setLocalState(quizState);
+  };
 
   return {
     quizState,
     dispatch,
+    setLocalState,
   };
 }
 

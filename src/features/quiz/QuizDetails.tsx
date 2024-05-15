@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useQuiz } from "../../context/QuizContext";
 
 import QuizCompeted from "./QuizCompeted";
@@ -9,6 +10,13 @@ function QuizDetails() {
   const {
     quizState: { pageState },
   } = useQuiz();
+
+  useEffect(() => {
+    return () => {
+     localStorage.clear()
+    };
+  },[]);
+
   return (
     <>
       {pageState === "initial" && <QuizInitial />}

@@ -115,7 +115,7 @@ function QuizQuestion({
 function QuestionOption({ option }: { option: string }) {
   const {
     dispatch,
-    quizState: { selectedAnswer, hasAnswered, isCorrectAnswer },
+    quizState: { selectedAnswer, hasAnswered, isCorrectAnswer , fromLocal},
   } = useQuiz();
   const { setErrorMessage } = useError();
   const isSelected = selectedAnswer === option;
@@ -138,13 +138,13 @@ function QuestionOption({ option }: { option: string }) {
   };
 
   useEffect(() => {
-    if (selectedAnswer && hasAnswered && isCorrectAnswer) {
+    if (!fromLocal && selectedAnswer && hasAnswered && isCorrectAnswer) {
       playSound(correct);
     }
-    if (selectedAnswer && hasAnswered && !isCorrectAnswer) {
+    if (!fromLocal && selectedAnswer && hasAnswered && !isCorrectAnswer) {
       playSound(wrong);
     }
-  }, [selectedAnswer, hasAnswered, isCorrectAnswer]);
+  }, [selectedAnswer, hasAnswered, isCorrectAnswer,fromLocal]);
 
 
 
