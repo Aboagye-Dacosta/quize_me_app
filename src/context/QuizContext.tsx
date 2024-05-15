@@ -6,11 +6,9 @@ interface Payload {
 }
 
 type QuizState = {
-  answer: string | null;
   currentQuestion: number;
   selectedAnswer: string | null;
   cumScore: number;
-  answeredQuestion: number[];
   isCorrectAnswer: boolean | null;
   pageState: "initial" | "start" | "complete";
   hasAnswered: boolean;
@@ -20,53 +18,56 @@ type QuizState = {
 
 type Action = {
   type: string;
-  payload?: Payload  ;
+  payload?: Payload;
 };
 
 type QuizContextType = {
   quizState: QuizState;
-  dispatch({type,payload}: Action): void;
+  dispatch({ type, payload }: Action): void;
 };
 
 const QuizContext = createContext<QuizContextType | null>(null);
 
 const initState: QuizState = {
-  answer: null,
   currentQuestion: 0,
   cumScore: 0,
   selectedAnswer: null,
-  answeredQuestion: [],
   isCorrectAnswer: null,
   pageState: "initial",
   hasAnswered: false,
   hasSelected: false,
-  fromLocal: false, 
+  fromLocal: false,
 };
 
-const reducer = (state: QuizState, action: Action): QuizState => {
+function reducer( state: QuizState, action: Action): QuizState {
   const payload = action?.payload;
+  let newState: QuizState | null = null;
+
   switch (action.type) {
     case "/initial":
-      return {
+      newState = {
         ...initState,
       };
+      break;
     case "/start":
-      return {
+      newState = {
         ...state,
         currentQuestion: 0,
         pageState: "start",
         fromLocal: false,
       };
+      break;
     case "/start/select":
-      return {
+      newState = {
         ...state,
         //@ts-expected-error the code is ok
-        selectedAnswer: (payload!.selectedAnswer as string| null),
+        selectedAnswer: payload!.selectedAnswer as string | null,
         hasSelected: true,
-        fromLocal:false,
+        fromLocal: false,
       };
+      break;
     case "/start/submit":
-      return {
+      newState = {
         ...state,
         cumScore:
           payload!.answer === state.selectedAnswer
@@ -74,10 +75,11 @@ const reducer = (state: QuizState, action: Action): QuizState => {
             : state.cumScore,
         isCorrectAnswer: payload!.answer === state.selectedAnswer,
         hasAnswered: true,
-        fromLocal: false
+        fromLocal: false,
       };
+      break;
     case "/start/next":
-      return {
+      newState = {
         ...initState,
         pageState: "start",
         currentQuestion: Math.min(
@@ -87,41 +89,47 @@ const reducer = (state: QuizState, action: Action): QuizState => {
         ),
         cumScore: state.cumScore,
       };
+      break;
 
     case "/complete":
-      return {
+      newState = {
         ...state,
         pageState: "complete",
-        fromLocal:false,
-      };
+        fromLocal: false,
+      } 
+      break;
 
     default:
       throw new Error("action not found");
   }
-};
+
+  //@ts-expect-error this is expected
+  this.setLocalState(newState);
+  return newState as QuizState;
+}
 
 function useQuizContext() {
   const [localState, setLocalState] = useLocalStorageState(initState, "quiz");
 
   const [quizState, dispatchAction] = useReducer(
-    reducer,
+    reducer.bind({ setLocalState }),
     initState,
     (initState) => {
-      if (Object.keys(localState).length > 0) return { ...(localState as QuizState), fromLocal: true };
+      if (Object.keys(localState).length > 0)
+        return { ...(localState as QuizState), fromLocal: true };
       return initState;
     }
   );
 
   const dispatch = ({ type, payload }: { type: string; payload?: Payload }) => {
     dispatchAction({ type, payload });
- 
-    setLocalState(quizState);
+
+    // setLocalState(quizState);
   };
 
   return {
     quizState,
     dispatch,
-    
   };
 }
 

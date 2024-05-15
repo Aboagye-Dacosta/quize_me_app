@@ -76,7 +76,7 @@ function Modal({ children }: { children: React.ReactNode }) {
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export function useModal() {
+ function useModal() {
   const context = useContext(ModalContext);
   if (!context)
     throw new Error("Modal is being using outside of modal provider");

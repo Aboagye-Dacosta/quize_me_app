@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {useEffect} from "react";
 
 import AppBody from "./AppBody";
 import AppHeader from "./AppHeader";
@@ -12,6 +13,13 @@ const StyledAppLayout = styled.div`
 `;
 
 function AppLayout() {
+
+  useEffect(()=>{
+    return ()=>{
+      localStorage.clear();
+    }
+  },[])
+
   return (
     <ErrorContextProvider>
       <ThemeContextProvider>

@@ -1,8 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import { useQuiz } from "../../context/QuizContext";
-import { useModal } from "../../ui/Modal";
 
 const StyledModalSubjectCard = styled.button`
   display: flex;
@@ -37,25 +36,28 @@ const StyledLogo = styled.div`
   justify-content: center;
   padding: 0.5rem;
 
-  background-color: #fff;
+  background-color: #040404;
   border-radius: var(--border-radius-sm);
 `;
 
 function ModalSubjectCard({
   iconUrl,
   subject,
+  closeModal,
 }: {
   iconUrl: string;
   subject: string;
+  closeModal?: () => void;
 }) {
   const navigate = useNavigate();
   const { dispatch } = useQuiz();
-  const { closeModal } = useModal();
 
   const handleClick = () => {
     navigate(`/${subject.toLowerCase()}`);
     dispatch({ type: "/initial" });
-    closeModal();
+    if (closeModal !== undefined) {
+      closeModal();
+    }
   };
 
   return (
