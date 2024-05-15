@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 
-export const useCloseClickOutside = (handler: ()=>void, isCapturing:boolean = true) => {
-  const ref = useRef();
+export const useCloseClickOutside = (handler: () => void, isCapturing: boolean = true) => {
+  const ref = useRef<HTMLElement | null>(null);
   useEffect(() => {
-    const handleCloseModal = (e:HTMLElement) => {
-      if (ref.current && !ref.current!.contains(e!.target)) {
+    const handleCloseModal = (e: MouseEvent) => {
+      if (ref.current! && !ref?.current!.contains(e.target as HTMLElement)) {
         handler();
       }
     };

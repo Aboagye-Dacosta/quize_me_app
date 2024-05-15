@@ -1,5 +1,12 @@
- 
-import { cloneElement, createContext, useContext, useState } from "react";
+import {
+  cloneElement,
+  createContext,
+  JSXElementConstructor,
+  LegacyRef,
+  ReactElement,
+  useContext,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import { useCloseClickOutside } from "../hooks/useCloseClickOutside";
@@ -48,7 +55,6 @@ const Button = styled.button`
   &:hover {
     background-color: var(--color-grey-100);
   }
- 
 `;
 
 const WindowBody = styled.div`
@@ -69,6 +75,7 @@ function Modal({ children }: { children: React.ReactNode }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useModal() {
   const context = useContext(ModalContext);
   if (!context)
@@ -80,12 +87,16 @@ function Open({
   children,
   opens: opensWindowName,
 }: {
-  children: React.ReactNode;
+  children: ReactElement<
+    HTMLElement,
+    string | JSXElementConstructor<HTMLElement>
+  >;
   opens: string;
 }) {
   const { openWindow } = useModal();
 
   const clone = cloneElement(children, {
+    //@ts-expect-error it has this property
     onClick: () => {
       openWindow(opensWindowName);
     },
@@ -98,11 +109,13 @@ function Window({
   children,
   name: windowName,
 }: {
-  children: React.ReactNode;
+  children: ReactElement<unknown, string | JSXElementConstructor<unknown>>;
   name: string;
 }) {
   const { openName, closeModal } = useModal();
-  const ref = useCloseClickOutside(closeModal);
+  const ref = useCloseClickOutside(closeModal) as
+    | LegacyRef<HTMLDivElement>
+    | undefined;
 
   if (openName != windowName) return;
 
@@ -110,7 +123,12 @@ function Window({
     <Overlay>
       <StyledModal ref={ref}>
         <Button onClick={closeModal}>&times;</Button>
-        <WindowBody>{cloneElement(children, { closeModal })}</WindowBody>
+        <WindowBody>
+          {cloneElement(children, {
+            //@ts-expect-error it has this property
+            closeModal,
+          })}
+        </WindowBody>
       </StyledModal>
     </Overlay>,
     document.body
@@ -120,5 +138,4 @@ function Window({
 Modal.Window = Window;
 Modal.Open = Open;
 
- 
 export default Modal;

@@ -25,19 +25,21 @@ function ThemeContextProvider({ children }: { children: React.ReactNode }) {
   }, [isDarkMode]);
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, setIsDarkMode }}>
+    <ThemeContext.Provider
+      value={{ isDarkMode: Boolean(isDarkMode), setIsDarkMode }}
+    >
       {children}
     </ThemeContext.Provider>
   );
 }
 
-
 // eslint-disable-next-line react-refresh/only-export-components
-export function useThem(){
-    const context = useContext(ThemeContext);
-    
-    if (!context) throw new Error("Theme context is being used outside of theme provider");
-    return context;
+export function useThem() {
+  const context = useContext(ThemeContext);
+
+  if (!context)
+    throw new Error("Theme context is being used outside of theme provider");
+  return context;
 }
 
 export default ThemeContextProvider;

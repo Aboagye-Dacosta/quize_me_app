@@ -1,6 +1,10 @@
 import styled, { css } from "styled-components";
 
-const Row = styled.div.attrs(({ type }) => ({
+const Display = styled.div<{ type: string }>`
+  display: flex;
+`;
+
+const Row = styled(Display).attrs(({ type }) => ({
   type: type || "vertical",
 }))`
   display: flex;
@@ -11,7 +15,7 @@ const Row = styled.div.attrs(({ type }) => ({
         return css`
           align-items: center;
           justify-content: space-between;
-          gap:1.2rem;
+          gap: 1.2rem;
         `;
       case "vertical":
         return css`

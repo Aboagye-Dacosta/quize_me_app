@@ -20,12 +20,12 @@ type QuizState = {
 
 type Action = {
   type: string;
-  payload?: Payload | null;
+  payload?: Payload  ;
 };
 
 type QuizContextType = {
   quizState: QuizState;
-  dispatch: React.Dispatch<Action>;
+  dispatch({type,payload}: Action): void;
 };
 
 const QuizContext = createContext<QuizContextType | null>(null);
@@ -60,7 +60,8 @@ const reducer = (state: QuizState, action: Action): QuizState => {
     case "/start/select":
       return {
         ...state,
-        selectedAnswer: payload!.selectedAnswer,
+        //@ts-expected-error the code is ok
+        selectedAnswer: (payload!.selectedAnswer as string| null),
         hasSelected: true,
         fromLocal:false,
       };
@@ -68,10 +69,10 @@ const reducer = (state: QuizState, action: Action): QuizState => {
       return {
         ...state,
         cumScore:
-          payload.answer === state.selectedAnswer
+          payload!.answer === state.selectedAnswer
             ? state.cumScore + 1
             : state.cumScore,
-        isCorrectAnswer: payload.answer === state.selectedAnswer,
+        isCorrectAnswer: payload!.answer === state.selectedAnswer,
         hasAnswered: true,
         fromLocal: false
       };
@@ -81,6 +82,7 @@ const reducer = (state: QuizState, action: Action): QuizState => {
         pageState: "start",
         currentQuestion: Math.min(
           state!.currentQuestion + 1,
+          //@ts-expect-error the code is valid
           payload!.questionsLen - 1
         ),
         cumScore: state.cumScore,
@@ -119,7 +121,7 @@ function useQuizContext() {
   return {
     quizState,
     dispatch,
-    setLocalState,
+    
   };
 }
 

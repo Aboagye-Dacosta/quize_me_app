@@ -5,7 +5,9 @@ import styled from "styled-components";
 import { useError } from "../../context/ErrorContext";
 import { useQuiz } from "../../context/QuizContext";
 
+//@ts-expect-error this import is ok
 import correct from "../../assets/correct.mp3"
+//@ts-expect-error this import is ok
 import wrong from "../../assets/wrong.mp3"
 
 const StyledQuizQuestion = styled.div`

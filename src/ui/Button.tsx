@@ -1,10 +1,4 @@
-import { StyleHTMLAttributes } from "react";
 import styled, { css } from "styled-components";
-
-type ButtonType = {
-  size: string | null;
-  variation: string | null;
-};
 
 const sizes = {
   small: css`
@@ -54,13 +48,7 @@ const variations = {
   `,
 };
 
-const Button = styled.button.attrs(
-  ({ size, variation, ...rem }) => ({
-    size: size || "medium",
-    variation: variation || "primary",
-    ...rem,
-  })
-)`
+const Btn = styled.button<{ size?: string; variation?: string }>`
   border: none;
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
@@ -69,8 +57,12 @@ const Button = styled.button.attrs(
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  /* white-space: nowrap; */
+`;
 
+const Button = styled(Btn).attrs(({ size, variation }) => ({
+  size: size || "medium",
+  variation: variation || "primary",
+}))<{ size?: string; variation?: string }>`
   ${(props) => {
     switch (props.size) {
       case "small":
