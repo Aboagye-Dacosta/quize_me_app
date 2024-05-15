@@ -13,9 +13,9 @@ function QuizDetails() {
 
   useEffect(() => {
     return () => {
-      localStorage.setItem("quiz", JSON.stringify({}));
+     localStorage.clear()
     };
-  });
+  },[]);
 
   return (
     <>
