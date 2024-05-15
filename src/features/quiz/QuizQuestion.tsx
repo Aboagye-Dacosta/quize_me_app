@@ -27,6 +27,7 @@ const Question = styled.p`
   padding: 1rem 2rem;
   box-shadow: var(--shadow-md);
   max-width: 50rem;
+  user-select: none;
 
   background: var(--bg-brand);
   border-radius: var(--border-radius-lg);

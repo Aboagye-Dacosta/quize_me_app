@@ -37,6 +37,7 @@ const StyledQuizQuestionTracker = styled.div`
     text-align: center;
     align-items:center;
     gap: 1rem;
+    user-select: none;
 
     @media screen and (min-width: 37.5em ){
       flex-direction: row;
@@ -105,7 +106,7 @@ function QuizSession() {
     <StyledQuizSession layout="position" layoutId="quiz">
       <StyledQuizQuestionTracker>
         <p>
-          <span>Total Points</span> <span> {currentQuestion + 1}</span>
+          <span>Question No.</span> <span> {currentQuestion + 1}</span>
         </p>
         <p>
          <span>Total Points</span>  <span>{cumScore}</span>
