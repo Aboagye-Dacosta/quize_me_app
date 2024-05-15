@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-const Display = styled.div<{ type: string }>`
+const Display = styled.div<{ type?: string }>`
   display: flex;
 `;
 

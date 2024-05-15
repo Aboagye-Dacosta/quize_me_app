@@ -89,7 +89,7 @@ const Content = styled.div`
   }
 `;
 
-function QuizCompeted() {
+function QuizCompleted() {
   const { subject } = useParams();
   const navigate = useNavigate();
   const {
@@ -140,4 +140,4 @@ function QuizCompeted() {
   );
 }
 
-export default QuizCompeted;
+export default QuizCompleted;
