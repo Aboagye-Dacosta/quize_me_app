@@ -27,7 +27,7 @@ const StyledErrorAlert = styled(motion.div)`
 function ErrorAlert() {
   const { errorMessage, setErrorMessage } = useError();
 
-  console.log("from alert error", errorMessage);
+  
   return (
     <>
       {errorMessage && (

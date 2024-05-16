@@ -1,10 +1,12 @@
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {useEffect} from "react";
 
+import ErrorContextProvider from "../../context/ErrorContext";
+import ThemeContextProvider from "../../context/ThemeContext";
+import { useLocalStorageState } from "../../hooks/useLocalStorageState";
 import AppBody from "./AppBody";
 import AppHeader from "./AppHeader";
-import ThemeContextProvider from "../../context/ThemeContext";
-import ErrorContextProvider from "../../context/ErrorContext";
 
 const StyledAppLayout = styled.div`
   position: relative;
@@ -13,10 +15,27 @@ const StyledAppLayout = styled.div`
 `;
 
 function AppLayout() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [localLocation, setLocalLocation] = useLocalStorageState(
+    location.pathname,
+    "pathname"
+  );
+  
+
+  useEffect(() => {
+    if (localLocation && location.pathname !== localLocation) {
+      setLocalLocation(location.pathname);
+    }
+ return () => {
+      localStorage.clear();
+    };
+  }, [localLocation, location, navigate, setLocalLocation]);
+
 
   useEffect(()=>{
-    return ()=>{
-      localStorage.clear();
+    if(localLocation){
+      navigate(localLocation)
     }
   },[])
 
